@@ -1,3 +1,19 @@
+/* Copyright 2021 Kan-Ru Chen <kanru@kanru.info>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "adafruit_ble.h"
 
 #include <stdio.h>
@@ -6,6 +22,7 @@
 #include "protocol/serial.h"
 #include "debug.h"
 #include "timer.h"
+#include "progmem.h"
 
 #define TIMEOUT 100
 #define SAMPLE_BATTERY
@@ -286,7 +303,7 @@ static bool process_queue_item(struct queue_item *item) {
     }
 }
 
-bool adafruit_ble_send_keys(uint8_t hid_modifier_mask, uint8_t *keys, uint8_t nkeys) {
+void adafruit_ble_send_keys(uint8_t hid_modifier_mask, uint8_t *keys, uint8_t nkeys) {
     struct queue_item item;
 
     item.queue_type   = QTKeyReport;
@@ -301,31 +318,31 @@ bool adafruit_ble_send_keys(uint8_t hid_modifier_mask, uint8_t *keys, uint8_t nk
         item.key.keys[5] = nkeys >= 5 ? keys[5] : 0;
 
         if (!enqueue(&send_queue, &item)) {
-            return false;
+            return;
         }
 
         if (nkeys <= 6) {
-            return true;
+            return;
         }
 
         nkeys -= 6;
         keys += 6;
     }
 
-    return true;
+    return;
 }
 
-bool adafruit_ble_send_consumer_key(uint16_t keycode, int hold_duration) {
+void adafruit_ble_send_consumer_key(uint16_t usage) {
     struct queue_item item;
 
     item.queue_type = QTConsumer;
-    item.consumer   = keycode;
+    item.consumer   = usage;
 
-    return enqueue(&send_queue, &item);
+    enqueue(&send_queue, &item);
 }
 
 #ifdef MOUSE_ENABLE
-bool adafruit_ble_send_mouse_move(int8_t x, int8_t y, int8_t scroll, int8_t pan, uint8_t buttons) {
+void adafruit_ble_send_mouse_move(int8_t x, int8_t y, int8_t scroll, int8_t pan, uint8_t buttons) {
     struct queue_item item;
 
     item.queue_type        = QTMouseMove;
@@ -335,7 +352,7 @@ bool adafruit_ble_send_mouse_move(int8_t x, int8_t y, int8_t scroll, int8_t pan,
     item.mousemove.pan     = pan;
     item.mousemove.buttons = buttons;
 
-    return enqueue(&send_queue, &item);
+    enqueue(&send_queue, &item);
 }
 #endif
 
