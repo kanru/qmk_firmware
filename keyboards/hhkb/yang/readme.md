@@ -5,9 +5,9 @@
 An alternative controler for the HHKB designed by YANG (yangdigi)
 based on the hasu controller.
 
-Keyboard Maintainer: [Kan-Ru Chen](https://github.com/kanru)  
-Hardware Supported: YANG HHKB BLE Controller  
-Hardware Availability: https://kbdfans.com/products/hhkb-ble-mod-upgrade-module
+* Keyboard Maintainer: [Kan-Ru Chen](https://github.com/kanru)  
+* Hardware Supported: YANG HHKB BLE Controller  
+* Hardware Availability: <https://kbdfans.com/products/hhkb-ble-mod-upgrade-module>
 
 Make example for this keyboard (after setting up your build environment):
 
@@ -19,17 +19,17 @@ file to the virtual USB storage and override the `HHKB_BLE.BIN` file in there.
 
 Make sure to unmount and eject the virtual USB storage.
 
-## Features:
+## Features
 
-- [x] QMK (via USB)
-- [x] Bluetooth (BLE)
-- [x] Power saving mode
-  - [x] Idle mode
-  - [x] Deep sleep mode
-- [x] LEDs
-- [x] Battery service
-- [x] Special commands
-  - [x] Switch BT peer
+* [x] QMK (via USB)
+* [x] Bluetooth (BLE)
+* [x] Power saving mode
+  * [x] Idle mode
+  * [x] Deep sleep mode
+* [x] LEDs
+* [x] Battery service
+* [x] Special commands
+  * [x] Switch BT peer
 
 ## Entering flash mode
 
@@ -115,4 +115,4 @@ your actual disk.
 
 ## Help page of original firmware
 
-http://help.ydkb.io/doku.php?id=en:kb-mods:hhkb-ble
+<http://help.ydkb.io/doku.php?id=en:kb-mods:hhkb-ble>
